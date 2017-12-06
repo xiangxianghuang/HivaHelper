@@ -1,16 +1,18 @@
 apply plugin: 'com.android.library'
 
+
+def versionCodeApp = 1              //版本号
+def versionNameApp = "1.0.0"        //版本名称
+
 android {
     compileSdkVersion 26
-
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0.0"
 
-
+        versionCode versionCodeApp
+        versionName versionNameApp
     }
 
     buildTypes {
@@ -20,10 +22,16 @@ android {
         }
     }
 
-    dexOptions {
+    android.libraryVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "Tools-${name}-${defaultConfig.versionName}.aar"
+        }
+//        variant.outputs.each { output ->
+//            File newFile = new File(output.outputFile.parent,variant.name + "-" + name +"-" + defaultConfig.versionName + ".aar" )
+//            output.outputFile.renameTo(newFile)
+//        }
     }
 }
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
@@ -37,7 +45,9 @@ publish{
     userOrg = 'huangxiangxiang'//bintray.com的用户名
     groupId = 'com.hiva.helper'//jcenter上的路径
     artifactId = 'tools'//项目名称
-    publishVersion = '1.0.0'//版本号
+//    publishVersion = '1.0.0'//版本号
+    publishVersion = versionNameApp//版本号
+
     desc = '常用的Android工具包'//描述，不重要
     website = siteUrl//项目主页
 }
