@@ -57,7 +57,7 @@ public class LogHelper {
 	public static String TAG() {
 
 		String tag = __FILE__() ;
-		return tag.substring(0,tag.indexOf(".class")) ;
+		return tag.substring(0,tag.indexOf(".java")) ;
 	}
 
 	public static String __TAG__() {

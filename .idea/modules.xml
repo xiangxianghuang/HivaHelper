@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HivaHelper.iml" filepath="$PROJECT_DIR$/HivaHelper.iml" />
-      <module fileurl="file://Z:\hiva\HivaHelper\HivaHelper.iml" filepath="Z:\hiva\HivaHelper\HivaHelper.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tools/Tools.iml" filepath="$PROJECT_DIR$/Tools/Tools.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

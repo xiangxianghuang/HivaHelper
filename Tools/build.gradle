@@ -1,8 +1,9 @@
 apply plugin: 'com.android.library'
 
 
-def versionCodeApp = 1              //版本号
-def versionNameApp = "1.0.0"        //版本名称
+def versionCodeApp = 2              //版本号
+def versionNameApp = "1.0.1"        //版本名称
+def projectName = "tools"            //项目(因为和远程仓库名称一致，不能修改)
 
 android {
     compileSdkVersion 26
@@ -22,30 +23,28 @@ android {
         }
     }
 
-    android.libraryVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "Tools-${name}-${defaultConfig.versionName}.aar"
-        }
-//        variant.outputs.each { output ->
-//            File newFile = new File(output.outputFile.parent,variant.name + "-" + name +"-" + defaultConfig.versionName + ".aar" )
-//            output.outputFile.renameTo(newFile)
+//    android.libraryVariants.all { variant ->
+//        variant.outputs.all {
+//            outputFileName = "${projectName}-${name}-${defaultConfig.versionName}.aar"
 //        }
-    }
+//    }
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    compile 'org.apache.poi:poi:3.11-beta1'
+//    compile 'org.apache.poi:poi-ooxml:3.11-beta1'
 }
 
 /** 以下开始是将Android Library上传到jcenter的相关配置**/
 apply plugin: 'com.novoda.bintray-release'//添加
 //项目主页
-def siteUrl = 'https://github.com/xiangxianghuang/communicate_app'
+def siteUrl = 'https://github.com/xiangxianghuang/HivaHelper'
 publish{
     repoName = 'HivaHelper'//远程仓库名字,不指明，默认是上传到maven
     userOrg = 'huangxiangxiang'//bintray.com的用户名
     groupId = 'com.hiva.helper'//jcenter上的路径
-    artifactId = 'tools'//项目名称
-//    publishVersion = '1.0.0'//版本号
+    artifactId = projectName//项目名称
     publishVersion = versionNameApp//版本号
 
     desc = '常用的Android工具包'//描述，不重要
