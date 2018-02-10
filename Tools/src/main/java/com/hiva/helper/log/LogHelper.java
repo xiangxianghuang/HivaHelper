@@ -46,6 +46,14 @@ public class LogHelper {
 		saveSdcardFile("e", tag, info) ;
 	}
 
+	public static void e(String tag, String info, Throwable tr) {
+		if (debug) {
+			Log.e(tag, info, tr);
+		}
+		saveSdcardFile("e", tag, info) ;
+	}
+
+
 	public static void w(String tag, String info) {
 		if (debug) {
 			Log.w(tag, info);

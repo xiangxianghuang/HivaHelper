@@ -1,0 +1,6 @@
+adb shell am startservice  -a com.iflytek.xiri2.START --es text "播放甄嬛传" --es startmode  "text"
+
+例：
+adb shell am startservice  -a com.iflytek.xiri2.START --es text "我要看湖南卫视" --es startmode  "text"
+
+adb shell am startservice  -a com.yongyida.robot.MotorService  --ei angle 30 --ei speed 8

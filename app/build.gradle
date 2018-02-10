@@ -3,8 +3,17 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
+//        signingConfigs {
+//            config {
+//                keyAlias 'androiddebugkey'
+//                keyPassword 'android'
+//                storeFile file('./keystore/mtk_platform.jks')
+//                storePassword 'android'
+//            }
+//        }
+
         applicationId "com.yongyida.robot.hivahelper"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -16,14 +25,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.0.0-beta1'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     implementation project(':Tools')
+
+    compile(name: 'customtextview-1.0', ext: 'aar')
+
+    compile 'com.android.support:design:26.1.0'
+
 }

@@ -1,0 +1,20 @@
+adb shell am start -n com.yongyida.robot.voice/com.zccl.ruiqianqi.presentation.mictest.MicTestActivity
+
+adb shell am start -n com.wyt.xq.yongyida/com.wyt.xq.yongyida.launcher.Launcher_MainActivity
+
+adb shell am start -n com.wyt.xq.yongyida/com.wyt.xq.yongyida.MainActivity --es type "儿歌天地"
+
+
+
+
+格林学前
+adb shell am start -n com.wyt.xq.yongyida/com.wyt.xq.yongyida.MainActivity --es type "成语故事"
+
+格林小学
+adb shell am start -n com.wyt.xxtongbu/com.wyt.xxtongbu.CallActivity --es type "wyt.app[@]小学点读"
+
+格林初中
+adb shell am start -n com.wyt.yongyida_cz/com.wyt.yongyida_cz.CallActivity --es type "wyt.app[@]动物世界"
+
+格林高中
+adb shell am start -n wyt.com.yonfyida_gaozhong/wyt.com.yonfyida_gaozhong.CallActivity --es type "wyt.app[@]高中同步名师"

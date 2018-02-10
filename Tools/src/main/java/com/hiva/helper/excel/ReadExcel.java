@@ -1,6 +1,7 @@
 package com.hiva.helper.excel;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.hiva.helper.log.LogHelper;
 
@@ -9,9 +10,11 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -119,4 +122,115 @@ public class ReadExcel {
 
         return -1 ;
     }
+
+
+    /**
+     *
+     * */
+    public static ArrayList<String> getFirstColumnItems(String path)  {
+
+        return getColumnItems(path, 0) ;
+    }
+
+    public static ArrayList<String> getColumnItems(String path, int column)  {
+
+        HSSFWorkbook hssfWorkbook = null ;
+        try {
+            POIFSFileSystem poifsFileSystem = new POIFSFileSystem(new FileInputStream(path));
+            hssfWorkbook = new HSSFWorkbook(poifsFileSystem);
+            HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(0);   //第一张表
+
+            ArrayList<String> items = new ArrayList<>() ;
+
+            int first = hssfSheet.getFirstRowNum() ;
+            int last = hssfSheet.getLastRowNum() ;
+            for (int i = first ; i < last ; i ++){
+
+                HSSFRow row = hssfSheet.getRow(i);
+                Cell cell =  row.getCell(column) ;
+                String value = cell.getStringCellValue().trim() ;
+
+                if(!TextUtils.isEmpty(value)){
+
+                    LogHelper.i(TAG, LogHelper.__TAG__() + " value : " + value);
+                    items.add(value) ;
+                }
+            }
+
+            return items ;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(hssfWorkbook != null){
+
+                try {
+                    hssfWorkbook.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null ;
+    }
+
+
+    public static void initExcelData(String path)  {
+
+        LogHelper.i(TAG, LogHelper.__TAG__() + " path : " + path);
+
+        HSSFWorkbook hssfWorkbook = null ;
+        try {
+            POIFSFileSystem poifsFileSystem = new POIFSFileSystem(new FileInputStream(path));
+            hssfWorkbook = new HSSFWorkbook(poifsFileSystem);
+            HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(0);   //第一张表
+
+
+            int first = hssfSheet.getFirstRowNum() ;
+            int last = hssfSheet.getLastRowNum() ;
+            for (int i = first ; i <= last ; i ++){
+
+                HSSFRow row = hssfSheet.getRow(i);
+                Cell cell =  row.getCell(0) ;
+                String value = cell.getStringCellValue().trim() ;
+
+                if(!TextUtils.isEmpty(value)){
+
+//                    LogHelper.i(TAG, LogHelper.__TAG__() + "positionDestinations value : " + value);
+                    LogHelper.i(TAG,  "positionDestinations value : " + value);
+                }
+            }
+
+
+            hssfSheet = hssfWorkbook.getSheetAt(1);   //第二张表
+            first = hssfSheet.getFirstRowNum() ;
+            last = hssfSheet.getLastRowNum() ;
+            for (int i = first ; i <= last ; i ++){
+
+                HSSFRow row = hssfSheet.getRow(i);
+                Cell cell =  row.getCell(0) ;
+                String value = cell.getStringCellValue().trim() ;
+
+                if(!TextUtils.isEmpty(value)){
+
+//                    LogHelper.i(TAG, LogHelper.__TAG__() + "positionIntroduces value : " + value);
+                    LogHelper.i(TAG, "positionIntroduces value : " + value);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(hssfWorkbook != null){
+
+                try {
+                    hssfWorkbook.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
 }
