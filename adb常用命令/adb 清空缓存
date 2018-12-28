@@ -1,0 +1,9 @@
+adb shell pm clear com.sohu.sohuvideo
+
+adb shell pm clear com.sohu.sohuvideo
+
+adb shell pm clear com.yongyida.robot.voice.master1
+
+adb shell pm clear hdpfans.com
+
+adb shell pm clear com.yongyida.robot.lockscreen

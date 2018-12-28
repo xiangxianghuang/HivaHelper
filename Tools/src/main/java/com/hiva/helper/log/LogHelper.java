@@ -70,7 +70,9 @@ public class LogHelper {
 
 	public static String __TAG__() {
 		StackTraceElement traceElement = ((new Exception()).getStackTrace())[1];
-		StringBuffer toStringBuffer = new StringBuffer("[").append(traceElement.getFileName()).append(" | ")
+		StringBuffer toStringBuffer = new StringBuffer("[")
+				.append(Thread.currentThread().getName()).append(" | ")
+				.append(traceElement.getFileName()).append(" | ")
 				.append(traceElement.getLineNumber()).append(" | ").append(traceElement.getMethodName()).append("]");
 		return toStringBuffer.toString() + "[*]";
 	}

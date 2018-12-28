@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="1"
+    android:versionName="1.0"
     package="com.yongyida.robot.hivahelper"
     >
+    <!--android:sharedUserId="android.uid.system"-->
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
 
     <application
         android:allowBackup="true"
@@ -12,25 +22,36 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        android:theme="@style/AppTheme">
+        <!--<activity android:name=".MainActivity"> </activity>-->
 
-        <service android:name=".floatbutton.FloatButtonService">
+        <!--<activity android:name="com.hiva.loopviewpage.ViewpagerDemo" >-->
 
-        </service>
+        <!--<activity android:name=".TestViewActivity"></activity>-->
 
-        <receiver android:name=".TestBroadcastReceiver">
+        <!--<activity android:name=".view.EduActivity" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+                <!--<category android:name="android.intent.category.HOME" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
 
-            <intent-filter>
-                <action android:name="hiva" />
-            </intent-filter>
+        <!--</activity>-->
 
-        </receiver>
+
+        <!--<service android:name=".floatbutton.FloatButtonService" android:process=":listen"></service>-->
+
+        <!--<receiver android:name=".TestBroadcastReceiver">-->
+
+            <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<action android:name="test" />&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<action android:name="com.yongyida.robot.motor.callBackData" />&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;<action android:name="TouchSensor" />&ndash;&gt;-->
+                <!--&lt;!&ndash;<action android:name="android.intent.action.BOOT_COMPLETED"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
+
+        <!--</receiver>-->
 
     </application>
 

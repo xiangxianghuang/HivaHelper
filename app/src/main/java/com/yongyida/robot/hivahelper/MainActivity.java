@@ -1,26 +1,41 @@
 package com.yongyida.robot.hivahelper;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.systemui.volume.VolumeDialog2;
 import com.hiva.helper.log.LogHelper;
+import com.yongyida.robot.multimodal.Test;
+import com.yongyida.robot.usb_uart.UART;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -28,7 +43,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class MainActivity extends Activity {
 
@@ -39,17 +59,39 @@ public class MainActivity extends Activity {
      */
     private TextView mMessageTvw;
 
+
+    private void checkPermission(Activity context){
+
+        if ( ContextCompat.checkSelfPermission(context, Manifest.permission_group.LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(context,Manifest.permission_group.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(context,Manifest.permission_group.MICROPHONE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(context,Manifest.permission_group.STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(context,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.RECORD_AUDIO,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    }, 1);
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        registerReceiver() ;
+//        checkPermission(this) ;
 
-//        setContentView(R.layout.volume_dialog);
+//        setContentView(R.layout.volume_dialog2);
 
 //        mMessageTvw.setText(StorageUtils.getData());
 
-        LogHelper.i(LogHelper.TAG(), LogHelper.__TAG__());
+        LogHelper.i(TAG, LogHelper.__TAG__());
 
 //        String path = new File(Environment.getExternalStorageDirectory(),"test.xls").getAbsolutePath();
 //        String name = "name3" ;
@@ -67,6 +109,90 @@ public class MainActivity extends Activity {
 //        Intent intent = new Intent(this, FloatButtonService.class) ;
 //        startService(intent) ;
 
+//        openAllLed() ;
+//        closeAllLed() ;
+
+//        setLedColor(0, 255, 255) ;
+
+//        setLedColorBreath(2,0,255,0) ;
+    }
+
+
+    private void closeAllLed(){
+
+        FileWriter out = null;
+        try {
+            out = new FileWriter("/dev/aw9523b");
+            String s = "113" ;
+            out.write(s);
+            out.close();
+            LogHelper.i(TAG, LogHelper.__TAG__());
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogHelper.i(TAG, LogHelper.__TAG__());
+        }
+    }
+
+
+    private void openAllLed(){
+
+        FileWriter out = null;
+        try {
+            out = new FileWriter("/dev/aw9523b");
+            String s = "112" ;
+            out.write(s);
+            out.close();
+            LogHelper.i(TAG, LogHelper.__TAG__());
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogHelper.i(TAG, LogHelper.__TAG__());
+        }
+    }
+
+
+    private void setLedColor(int red, int green, int blue){
+
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream("/dev/aw9523b");
+            String s = String.format("111%03d %03d %03d",red,green,blue);
+            out.write(s.getBytes());
+            out.close();
+            LogHelper.i(TAG, LogHelper.__TAG__() + s);
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogHelper.i(TAG, LogHelper.__TAG__());
+        }
+    }
+
+
+
+
+    private void setLedColorBreath(int time,int red, int green, int blue){
+
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream("/dev/aw9523b");
+            String s = String.format("114%03d %03d %03d %03d",time,red,green,blue);
+            out.write(s.getBytes());
+
+            out.write(s.getBytes());
+            out.close();
+            LogHelper.i(TAG, LogHelper.__TAG__() + s);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogHelper.i(TAG, LogHelper.__TAG__());
+        }
+
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unRegisterReceiver();
     }
 
     private void initView() {
@@ -161,10 +287,15 @@ public class MainActivity extends Activity {
 
     }
 
-
     public void openGeLinPrimary(View view) {
 
-        showDialog() ;
+        NavigatePresenter navigatePresenter = new NavigatePresenter() ;
+        navigatePresenter.parseErrorNavigate("带我去阳台");
+
+
+
+
+//        showDialog() ;
 
 //        openGeLinPrimary(this) ;
 //        getInt();
@@ -453,22 +584,67 @@ public class MainActivity extends Activity {
 
 
     private void showDialog(){
+//
+////        Dialog dialog = new Dialog(this) ;
+//        Dialog dialog = new Dialog(getApplicationContext(), R.style.Dialog_Fullscreen) ;
+//
+//        dialog.setContentView(R.layout.volume_dialog);
+//        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+////
+//        ViewGroup viewGroup = (ViewGroup) dialog.findViewById(R.id.volume_dialog_content);
+//        View child = dialog.getLayoutInflater().inflate(R.layout.volume_dialog_row, null) ;
+//
+////        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(-1,-1 ) ;
+////        viewGroup.addView(child, viewGroup.getChildCount() - 1,layoutParams);
+//        viewGroup.addView(child, viewGroup.getChildCount() - 1);
+//
+//        dialog.show();
 
-        Dialog dialog = new Dialog(this, R.style.Dialog_Fullscreen) ;
-//        Dialog dialog = new Dialog(this) ;
-        dialog.setContentView(R.layout.volume_dialog_0);
-        ViewGroup viewGroup = dialog.findViewById(R.id.volume_dialog_content) ;
+//        Dialog dialog = new Dialog(this, R.style.Dialog_Fullscreen) ;
+////        Dialog dialog = new Dialog(this) ;
+//
+////        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT ,RelativeLayout.LayoutParams.MATCH_PARENT ) ;
+//        dialog.setContentView(R.layout.volume_dialog2);
+//        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//
+//        dialog.show();
 
-        View child = LayoutInflater.from(this).inflate(R.layout.volume_dialog, null) ;
+//        volumeDialog2.show();
 
-//        final LinearLayout.LayoutParams lp =
-//                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        viewGroup.addView(child, viewGroup.getChildCount() - 1);
-//        viewGroup.addView(child);
 
-        dialog.show();
 
+//        if(++volume > 16){
+//
+//            volume = 0 ;
+//        }
+//
+//        volumeDialog2.showVolume(volume);
+
+
+        showVolumeDialog2() ;
     }
+
+
+    private VolumeDialog2 volumeDialog2;
+    private void showVolumeDialog2(){
+
+        if(volumeDialog2 == null){
+
+            volumeDialog2 = new VolumeDialog2(this) ;
+
+        }
+
+        volumeDialog2.showVolume() ;
+    }
+    private void dismissVolumeDialog2(){
+
+        if(volumeDialog2 != null){
+
+            volumeDialog2.dismissVolume();
+        }
+    }
+
+    int volume ;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -480,4 +656,182 @@ public class MainActivity extends Activity {
 
         return super.onTouchEvent(event);
     }
+
+    public void executeWord(View view) {
+
+//        Intent intent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:112"));
+//        startActivity(intent);
+
+//        Intent intent = new Intent(Intent.ACTION_CALL);
+//        Uri data = Uri.parse("tel:18658606472");
+//        intent.setData(data);
+//        startActivity(intent);
+
+        if(mTest == null || !mTest.asBinder().isBinderAlive()){
+
+            LogHelper.i(TAG, LogHelper.__TAG__());
+
+            Intent intent = new Intent() ;
+            intent.setPackage("com.yongyida.robot.multimodal") ;
+            intent.setAction("test") ;
+
+            bindService(intent, connection ,Context.BIND_AUTO_CREATE) ;
+
+        }else{
+
+            IBinder binder = mTest.asBinder() ;
+            LogHelper.i(TAG, LogHelper.__TAG__() + " pingBinder : " + binder.pingBinder() + " isBinderAlive : " + binder.isBinderAlive());
+
+            try {
+                mTest.send("index->" + (index++));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private int index = 0 ;
+
+    private Test mTest ;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            LogHelper.i(TAG, LogHelper.__TAG__());
+            mTest = Test.Stub.asInterface(service) ;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+            LogHelper.i(TAG, LogHelper.__TAG__());
+        }
+    };
+
+    /**打开USB*/
+    public void openUsb(View view) {
+
+//        UART.getInstance(this).openDevice(new UART.OpenDeviceListener() {
+//            @Override
+//            public void onOpenDevice(boolean isOpen) {
+//
+//                LogHelper.i(TAG, LogHelper.__TAG__() + " isOpen : " + isOpen );
+//            }
+//        });
+
+//        try{
+//
+//            callPhone("110") ;
+//
+//        }catch (Exception e){
+//
+//            LogHelper.e(TAG, LogHelper.__TAG__() + " Exception : " + e );
+//        }
+
+
+        try {
+            closeRobot() ;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 拨打电话（直接拨打电话）
+     *
+     * @param phoneNum 电话号码（如果电话号码是短号会回调到拨打界面，如：112）
+     */
+    private void callPhone(String phoneNum) {
+        LogHelper.i(TAG, LogHelper.__TAG__()) ;
+
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK) ;
+
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        startActivity(intent);
+    }
+
+
+    private void registerReceiver(){
+
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED) ;
+        registerReceiver(receiver,filter) ;
+
+    }
+
+
+    private void unRegisterReceiver(){
+
+        unregisterReceiver(receiver);
+    }
+
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())){
+
+                // 当前电池的电压
+                int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
+                // 电池的健康状态
+                int health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, -1);
+                // 电池当前的电量, 它介于0和 EXTRA_SCALE之间
+                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+                // 电池电量的最大值
+                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+                // 当前手机使用的是哪里的电源
+                int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+                int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+                // 电池使用的技术。比如，对于锂电池是Li-ion
+                String technology = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY);
+                // 当前电池的温度
+                int temperature = intent. getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
+
+
+//                mMessageTvw.setText("voltage : " + voltage + "\n" +
+//                        "health : " + health + "\n" +
+//                        "level : " + level + "\n" +
+//                        "scale : " + scale + "\n" +
+//                        "plugged : " + plugged + "\n" +
+//                        "status : " + status + "\n" +
+//                        "technology : " + technology + "\n" +
+//                        "temperature : " + temperature + "\n" );
+
+
+
+                mMessageTvw.setText("voltage : " + voltage + "\n" +
+                        "level : " + level + "\n");
+
+
+            }
+
+
+        }
+    } ;
+
+
+    private void closeRobot() throws JSONException, ParseException {
+
+        String value = "{\"datetime\":\"O+10m\",\"suggestDatetime\":\"2018-06-13T17:48:34\"}";
+        JSONObject jsonObject = new JSONObject(value);
+        //{"datetime":"O+10m","suggestDatetime":"2018-03-27T10:11:56"}
+        String datetime = jsonObject.getString("suggestDatetime").replace("T", " ");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format.parse(datetime);
+        String current = format.format(new Date());
+        Date currentDate = format.parse(current);
+        //获得时间差
+        int time = (int) ((date.getTime() - currentDate.getTime()) / 1000);
+        LogHelper.i(TAG, "time : " + time);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
+    }
 }
+

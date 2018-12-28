@@ -18,3 +18,79 @@ adb shell am start -n com.wyt.yongyida_cz/com.wyt.yongyida_cz.CallActivity --es 
 
 格林高中
 adb shell am start -n wyt.com.yonfyida_gaozhong/wyt.com.yonfyida_gaozhong.CallActivity --es type "wyt.app[@]高中同步名师"
+
+
+
+adb shell am start -n hdpfans.com/hdp.player.StartActivity
+
+adb shell am start -n com.yongyida.robot.hivahelper/com.yongyida.robot.hivahelper.MainActivity
+
+
+adb shell am start -n com.yongyida.robot.video/com.yongyida.robot.video.activity.MainActivity
+
+
+#打开设置
+adb shell am start -n com.android.settings/com.android.settings.Settings
+
+#打开WIFI设置
+adb shell am start -a android.settings.WIFI_SETTINGS
+
+#打开MCU烧录软件
+adb shell am start -n com.yyd.robot.update/com.yyd.motor.MainActivity
+
+#打开工厂模式
+adb shell am start -n com.mediatek.factorymode/com.mediatek.factorymode.FactoryMode
+
+
+#打开奇奇勇测试界面
+adb shell am start -n com.yonyida.robot.sdkdemo.test/com.yongyida.robot.sdkdemo.MainActivity
+
+#打开MTK工模
+adb shell am start -n com.mediatek.engineermode/.EngineerMode
+
+#打开深蓝
+adb shell am start -n com.yongyida.robot.slamconnectcontrol/.connect
+
+#罗杰
+adb shell am start -n com.yydrobo.yydrobofggame/.activity.GameTimeActivity
+
+adb shell am start -n com.yongyida.robot.hivahelper/.TestViewActivity
+
+
+adb shell am start -n com.yongyida.robot.lockscreen/.presentation.view.ExpressionActivity
+
+
+adb shell am start -n hdpfans.com/hdp.player.StartActivity
+
+
+adb shell am start -n com.yongyida.robot.education/.MainActivity --es TypeName "ChildSong"
+
+
+
+
+adb shell am start -n com.ampak.rftesttool/.RFTestTool
+
+adb shell am start -n com.yongyida.robot.hardware/com.yongyida.robot.hardware.test.TestMainActivity
+
+
+adb shell am start -n com.yongyida.robot.navigation/.activity.CloseTeamActivity
+
+
+adb shell am start -n com.hiva.helper.test/.file.TestAssetCopyToFileActivity
+
+#格林教育demo
+adb shell am start -n com.wyt.iexuetang.tv/com.wyt.iexuetang.sharp.activities.AdvertisingActivity
+adb shell am start -n com.wyt.iexuetang.hd/com.wyt.iexuetang.sharp.activities.AdvertisingActivity
+adb shell am start -n com.wyt.iexuetang.hd/com.wyt.iexuetang.sharp.new_sharp.second_classification.SecondClassificationActivity
+
+//
+10.7.5.88:8080/gs-robot/data/maps
+10.7.5.88:8080/gs-robot/cmd/move_to?distance=0.1&speed=-0.1
+10.7.5.88:8080/gs-robot/data/paths?map_name=2a_office
+10.7.5.88:8080/gs-robot/data/graph_paths?map_name=2a_office
+adb shell am start -a com.android.chrome/android.intent.action.MAIN
+
+10.7.5.88:8080/gs-robot/data/graph_paths?map_name=YYD2B
+10.7.5.88:8080/gs-robot/data/task_queues?map_name=YYD2B
+10.7.5.88:8080/gs-robot/real_time_data/position
+

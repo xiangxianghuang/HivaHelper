@@ -4,3 +4,34 @@ adb shell am startservice  -a com.iflytek.xiri2.START --es text "播放甄嬛传
 adb shell am startservice  -a com.iflytek.xiri2.START --es text "我要看湖南卫视" --es startmode  "text"
 
 adb shell am startservice  -a com.yongyida.robot.MotorService  --ei angle 30 --ei speed 8
+
+
+adb shell am startservice  -a com.iflytek.xiri2.START --es text "播放音乐" --es startmode  "text"
+adb shell am startservice  -a com.iflytek.xiri2.START --es text "我要听音乐" --es startmode  "text"
+
+adb shell am startservice  -a com.yongyida.robot.MotorService
+
+
+adb shell am startservice  -a com.iflytek.xiri2.START --es text "我要看视频" --es startmode  "text"
+
+
+adb shell am startservice  -a com.iflytek.xiri2.START --es text "播放CCTV15" --es startmode  "text"
+adb shell am startservice  -a com.iflytek.xiri2.START --es text "循环播放" --es startmode  "text"
+
+adb shell am startservice  -a com.iflytek.xiri2.START --es text "打开直播" --es startmode  "text"
+
+
+adb shell am startservice  -a com.iflytek.xiri2.START --es text "打开直播" --es startmode  "text"
+
+adb shell am startservice -n com.yongyida.robot.lockscreen/.brain.service.ExpressionService:listener
+
+adb shell am startservice  -a android.intent.action.playvideo
+
+adb shell am startservice -a android.intent.action.quickWJWPApp
+
+adb shell am startservice -a android.intent.action.quickWJWPApp
+
+adb shell am startservice  -a com.yydrobot.emotion.CHAT --es action "laugh"
+
+adb shell am startservice  -a com.yongyida.robot.GIF --es type "show" --es name "first"
+

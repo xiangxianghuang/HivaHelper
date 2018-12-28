@@ -1,6 +1,22 @@
 <resources>
 
 
+    <!--<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">-->
+    <style name="AppTheme"  parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <!--<item name="android:windowBackground">@drawable/img_logo_lg</item>-->
+        <!--<item name="android:windowBackground">@null</item>-->
+    </style>
+
+    <!--<style name="AppTheme"  parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--&lt;!&ndash;<item name="android:windowBackground">@drawable/img_logo_lg</item>&ndash;&gt;-->
+    <!--</style>-->
+
+
+
     <style name="loading_dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>

@@ -5,8 +5,25 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@drawable/caro_security_scaleup_0004"
+
     >
+
+    <EditText
+        android:id="@+id/word_ett"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="给妈妈打电话"
+        android:visibility="gone"
+        />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="解析语句"
+        android:onClick="executeWord"
+        android:visibility="gone"
+        />
 
     <Button
         android:layout_width="match_parent"
@@ -29,8 +46,20 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="Hello World!"
-        android:visibility="gone"
-      android:textSize="24dp"
+        android:textColor="#ff34ff"
+      android:textSize="40dp"
       />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="openUsb"
+        android:text="打开USB" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
 </LinearLayout>

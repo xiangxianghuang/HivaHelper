@@ -29,7 +29,7 @@ public class NetWorkUtils {
 
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-            return networkInfo.isAvailable();
+            return networkInfo.isAvailable() && (networkInfo.getState() == NetworkInfo.State.CONNECTED);
 
         }catch (NullPointerException ignored){
 
@@ -39,7 +39,7 @@ public class NetWorkUtils {
 
 
     /**
-     * 判断WIFI网络是否可用
+     * 判断WIFI网络是否连接
      * @param context
      * @return
      */
@@ -48,7 +48,7 @@ public class NetWorkUtils {
         try {
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            return networkInfo.isAvailable() ;
+            return networkInfo.isAvailable() && (networkInfo.getState() == NetworkInfo.State.CONNECTED);
 
         }catch (NullPointerException ignored){
         }
@@ -57,7 +57,7 @@ public class NetWorkUtils {
 
 
     /**
-     * 判断MOBILE网络是否可用
+     * 判断MOBILE网络是否连接
      * @param context
      * @return
      */
@@ -66,7 +66,7 @@ public class NetWorkUtils {
         try {
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            return networkInfo.isAvailable() ;
+            return networkInfo.isAvailable() && (networkInfo.getState() == NetworkInfo.State.CONNECTED) ;
 
         }catch (NullPointerException ignored){
         }
@@ -88,7 +88,7 @@ public class NetWorkUtils {
         try{
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-            return networkInfo.getType();
+            return networkInfo.getType() ;
 
         }catch (NullPointerException ignored){
         }

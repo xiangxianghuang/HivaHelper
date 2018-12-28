@@ -99,6 +99,10 @@ public class NavigatePresenter {
 
     public void initExcelData(String path)  {
 
+        File file = new File(path);
+        boolean isExist = file.exists() ;
+        long l = file.length() ;
+
         HSSFWorkbook hssfWorkbook = null ;
         try {
             POIFSFileSystem poifsFileSystem = new POIFSFileSystem(new FileInputStream(path));

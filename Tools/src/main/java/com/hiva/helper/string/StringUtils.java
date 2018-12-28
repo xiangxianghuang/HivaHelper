@@ -35,6 +35,16 @@ public class StringUtils {
     }
 
 
+    public static String toHexString(byte[] data){
+
+        if(data == null){
+
+            return null ;
+        }
+
+        return toHexString(data, data.length) ;
+    }
+
     /**
      * 将byte数字转变成String格式
      * */

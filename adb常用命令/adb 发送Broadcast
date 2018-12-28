@@ -17,3 +17,29 @@ adb shell am broadcast  -a   com.android.test
                         --es test_string "this is test string"
                         --ei test_int 100
                         --ez test_boolean true
+
+adb shell am broadcast -a com.yongyida.robot.MOVE --es action "FOOT_FORWARD" --ei time 2000
+adb shell am broadcast -a com.yydrobot.emotion.CHAT --es emoji "init"
+
+adb shell am broadcast -a com.yydrobot.DANCE --es result "忘情水"
+adb shell am broadcast -a com.yydrobot.DANCE --es result '{"name":"小苹果"}'
+
+
+adb shell am broadcast -a test --es word "我要听音乐"
+
+adb shell am broadcast -a com.yydrobot.STOP
+
+
+adb shell am broadcast -a TouchSensor --es android.intent.extra.Touch "pir"
+
+
+
+adb shell am broadcast -a com.yongyida.robot.change.BREATH_LED --es package "com.yongyida.robot.voice"  --ez on_off "true"  --es place "pir"  --es colour "pir"  --es frequency "pir"  --es Permanent "pir"  --es priority "pir"
+
+
+adb shell am broadcast -a com.yongyida.robot.MOVE --es action "LEFT" --ei time 5000
+
+adb shell am broadcast -a com.yongyida.robot.MOVE --es action "STOP"
+
+adb shell am broadcast -a com.yongyida.robot.BATTERY_CHANGE --ei level 30
+adb shell am broadcast -a com.yongyida.robot.CHANGE_TIME

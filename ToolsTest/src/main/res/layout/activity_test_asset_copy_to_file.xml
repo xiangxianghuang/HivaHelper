@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<com.hiva.helper.app.view.VideoView2-->
+        <!--android:id="@+id/video_vvw"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--/>-->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拷贝（不存在拷贝）"
+        android:onClick="copyAssetsToFileIfNone"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拷贝（直接拷贝）"
+        android:onClick="copyAssetsToFile"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拷贝（删除拷贝）"
+        android:onClick="copyOnlyAssetsToFile"
+        />
+
+</LinearLayout>
